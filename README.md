@@ -28,10 +28,19 @@ npm run parse-log
 # You can run the CLI parser by providing the options
 npm run parse-log -- --input ./app.log --output error-log.json --logLevel error
 
+# You can also install the CLI package globally by running
+npm run link-cli-locally
+
+# Then you can start using the CLI by running the log-parser-cli command, take a look at the second picture in the example(CLI Usage)
+
 ```
 
-## Example when you run parse-log with no options
+## Example
+### When you run parse-log with no options, it will show you a set of questions
 ![Alt text](img/questions-inquirer.png?raw=true "Questions Parse Log")
+
+### CLI Usage
+![Alt text](img/cli-usage.png?raw=true "CLI usage")
 
 ## Help section
 
