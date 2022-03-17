@@ -1,7 +1,7 @@
 {
   "name": "log-parser-cli",
   "version": "0.0.1",
-  "description": "CLI that find all the log messages with the level error and print them into the output file",
+  "description": "Log parser CLI that filters all the log messages with the logLevel specified and generates an output log file in a readable format",
   "author": "Moises Trigueros",
   "private": true,
   "license": "MIT",
