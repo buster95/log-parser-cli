@@ -12,8 +12,7 @@ export function parseInputLogFile(
     /\s+(?=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z)/, // ISO 8601 -> YYYY-MM-DDTHH:mm:ss.sssZ
   );
 
-  const outputLogs = buildOutputLog(logLevel, logs);
-  fs.writeFileSync(options.output, JSON.stringify(outputLogs, null, 2));
+  return buildOutputLog(logLevel, logs);
 }
 
 function buildOutputLog(logLevel: LogLevel, logs: string[]): OutputLog[] {
