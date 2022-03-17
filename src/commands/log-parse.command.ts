@@ -17,6 +17,8 @@ export interface LogParseOptions {
 
 @Command({
   name: 'LogParse',
+  description:
+    'Parses a given input log file and generates an output file with the selected logLevel',
   options: {
     isDefault: true,
   },
