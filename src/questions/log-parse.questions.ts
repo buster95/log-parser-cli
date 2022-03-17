@@ -4,7 +4,7 @@ import { LogLevel } from 'src/types/enums/log-level';
 import {
   validateInputPath,
   validateOutputPath,
-} from 'src/utils/validate-file-extension';
+} from 'src/utils/validate-paths';
 
 @QuestionSet({ name: QuestionsEnum.LogParseQuestions })
 export class LogParseQuestions {

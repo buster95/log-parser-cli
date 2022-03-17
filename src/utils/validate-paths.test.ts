@@ -1,8 +1,5 @@
 import * as fs from 'fs';
-import {
-  validateInputPath,
-  validateOutputPath,
-} from './validate-file-extension';
+import { validateInputPath, validateOutputPath } from './validate-paths';
 
 describe('Validate file extension', () => {
   describe('Validate input path', () => {

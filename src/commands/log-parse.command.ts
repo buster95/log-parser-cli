@@ -12,7 +12,7 @@ import * as chalk from 'chalk';
 import {
   validateInputPath,
   validateOutputPath,
-} from 'src/utils/validate-file-extension';
+} from 'src/utils/validate-paths';
 
 export interface LogParseOptions {
   input: string;
