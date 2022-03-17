@@ -1,8 +1,10 @@
-import { Question, QuestionSet } from 'nest-commander';
-import * as fs from 'fs';
+import { Question, QuestionSet, ValidateFor } from 'nest-commander';
 import { QuestionsEnum } from 'src/types/enums/questions.enum';
 import { LogLevel } from 'src/types/enums/log-level';
-import { endsWithAllowedFileExtension } from 'src/utils/validate-file-extension';
+import {
+  validateInputPath,
+  validateOutputPath,
+} from 'src/utils/validate-file-extension';
 
 @QuestionSet({ name: QuestionsEnum.LogParseQuestions })
 export class LogParseQuestions {
@@ -10,42 +12,33 @@ export class LogParseQuestions {
     type: 'input',
     name: 'input',
     message: 'Path of the input file?',
-    validate: (input: string) => {
-      const allowedExtensions = ['.log', '.txt'];
-      if (!endsWithAllowedFileExtension(allowedExtensions, input)) {
-        return `The input file must end with one of the following extensions [ ${allowedExtensions.join(
-          ' | ',
-        )} ]`;
-      }
-
-      if (!fs.existsSync(input)) {
-        return `The specified input path doesn't exist`;
-      }
-
-      return true;
-    },
   })
   parseInputPath(input: string) {
     return input;
+  }
+
+  @ValidateFor({
+    name: 'input',
+  })
+  validateInputPathQuestion(input: string) {
+    return validateInputPath(input) ?? true;
   }
 
   @Question({
     type: 'input',
     name: 'output',
     message: 'Path of the output file?',
-    validate: (input: string) => {
-      const allowedExtensions = ['.json', '.txt'];
-      if (!endsWithAllowedFileExtension(allowedExtensions, input)) {
-        return `The output file must end with one of the following extensions [ ${allowedExtensions.join(
-          ' | ',
-        )} ]`;
-      }
-
-      return true;
-    },
+    default: 'output-log.json',
   })
   parseOutputPath(output: string) {
     return output;
+  }
+
+  @ValidateFor({
+    name: 'output',
+  })
+  validateOutputPathQuestion(output: string) {
+    return validateOutputPath(output) ?? true;
   }
 
   @Question({

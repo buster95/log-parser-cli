@@ -1,4 +1,3 @@
-import { Logger } from '@nestjs/common';
 import {
   Command,
   CommandRunner,
@@ -8,6 +7,12 @@ import {
 import { LogLevel } from 'src/types/enums/log-level';
 import { parseInputLogFile } from 'src/utils/parse-input-log-file';
 import { QuestionsEnum } from '../types/enums/questions.enum';
+import * as fs from 'fs';
+import * as chalk from 'chalk';
+import {
+  validateInputPath,
+  validateOutputPath,
+} from 'src/utils/validate-file-extension';
 
 export interface LogParseOptions {
   input: string;
@@ -24,24 +29,36 @@ export interface LogParseOptions {
   },
 })
 export class LogParseCommand implements CommandRunner {
-  constructor(
-    private readonly inquirerService: InquirerService,
-    private readonly logger: Logger,
-  ) {}
+  private log = console.log;
+  constructor(private readonly inquirerService: InquirerService) {}
 
   async run(_passedParams: string[], options: LogParseOptions): Promise<void> {
+    this.validatePromptOptions(options);
     options = await this.inquirerService.ask(
       QuestionsEnum.LogParseQuestions,
       options,
     );
 
     try {
-      parseInputLogFile(options.logLevel, options);
-    } catch (err) {
-      this.logger.error(err);
-      throw new Error(
-        'An error has occurred trying to parse the input log file',
+      const outputLogs = parseInputLogFile(options.logLevel, options);
+      fs.writeFileSync(options.output, JSON.stringify(outputLogs, null, 2));
+      this.log(
+        chalk.green('An output log file has been generated in %s'),
+        options.output,
       );
+    } catch (err) {
+      this.log(chalk.red(err.message));
+      process.exit(1);
+    }
+  }
+
+  validatePromptOptions({ input, output }: LogParseOptions) {
+    try {
+      this.validateOption(input, 'input');
+      this.validateOption(output, 'output');
+    } catch (err) {
+      this.log(chalk.red(err.message));
+      process.exit(1);
     }
   }
 
@@ -51,6 +68,18 @@ export class LogParseCommand implements CommandRunner {
   })
   parseInput(input: string): string {
     return input;
+  }
+
+  validateOption(value: string, option: 'input' | 'output'): void {
+    if (value !== undefined) {
+      const validate =
+        option === 'input' ? validateInputPath : validateOutputPath;
+      const validationMessage = validate(value);
+
+      if (validationMessage !== undefined) {
+        throw new Error(validationMessage);
+      }
+    }
   }
 
   @Option({
