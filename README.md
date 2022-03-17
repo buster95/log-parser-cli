@@ -6,7 +6,8 @@
   </a>
 </p>
 
-> Log parser CLI that find all the log messages with the logLevel specified and generates an output log file in a readable format
+> Log parser CLI that filters all the log messages with the logLevel specified and generates an output log file in a readable format
+
 
 ## Prerequisites
 * npm >= 7.24.0
@@ -24,7 +25,7 @@ npm install
 # You can use the defined script to run the log parser, this will show you a set of questions in the CLI
 npm run parse-log
 
-# You can run the CLI parser providing the options
+# You can run the CLI parser by providing the options
 npm run parse-log -- --input ./app.log --output error-log.json --logLevel error
 
 ```
