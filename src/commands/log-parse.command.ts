@@ -29,7 +29,6 @@ export interface LogParseOptions {
   },
 })
 export class LogParseCommand implements CommandRunner {
-  private log = console.log;
   constructor(private readonly inquirerService: InquirerService) {}
 
   async run(_passedParams: string[], options: LogParseOptions): Promise<void> {
@@ -42,12 +41,12 @@ export class LogParseCommand implements CommandRunner {
     try {
       const outputLogs = parseInputLogFile(options);
       fs.writeFileSync(options.output, JSON.stringify(outputLogs, null, 2));
-      this.log(
+      console.log(
         chalk.green('An output log file has been generated in %s'),
         options.output,
       );
     } catch (err) {
-      this.log(chalk.red(err.message));
+      console.log(chalk.red(err.message));
       process.exit(1);
     }
   }
@@ -57,7 +56,7 @@ export class LogParseCommand implements CommandRunner {
       this.validateOption(input, 'input');
       this.validateOption(output, 'output');
     } catch (err) {
-      this.log(chalk.red(err.message));
+      console.log(chalk.red(err.message));
       process.exit(1);
     }
   }
