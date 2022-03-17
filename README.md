@@ -33,6 +33,12 @@ npm run parse-log -- --input ./app.log --output error-log.json --logLevel error
 ## Example when you run parse-log with no options
 ![Alt text](img/questions-inquirer.png?raw=true "Questions Parse Log")
 
+## Help section
+
+If you want to know the purpose of each option and what values they expect you can run the following command
+```sh
+npm run help
+```
 
 ## Run tests
 

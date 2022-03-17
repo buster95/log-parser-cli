@@ -22,7 +22,8 @@ export interface LogParseOptions {
 
 @Command({
   name: 'LogParse',
-  description: 'Parses a given input log file and generates a readable output file that contains the logs that match with the selected logLevel.',
+  description:
+    'Parses a given input log file and generates a readable output file that contains the logs that match with the selected logLevel.',
   options: {
     isDefault: true,
   },
@@ -82,7 +83,7 @@ export class LogParseCommand implements CommandRunner {
 
   @Option({
     flags: '-o, --output [output]',
-    description: 'Path of the parsed output log file',
+    description: 'Path of the output log file',
   })
   parseOutput(output: string): string {
     return output;
