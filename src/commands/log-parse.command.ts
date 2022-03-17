@@ -40,7 +40,7 @@ export class LogParseCommand implements CommandRunner {
     );
 
     try {
-      const outputLogs = parseInputLogFile(options.logLevel, options);
+      const outputLogs = parseInputLogFile(options);
       fs.writeFileSync(options.output, JSON.stringify(outputLogs, null, 2));
       this.log(
         chalk.green('An output log file has been generated in %s'),

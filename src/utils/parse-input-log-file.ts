@@ -3,16 +3,17 @@ import { LogParseOptions } from 'src/commands/log-parse.command';
 import { LogLevel } from 'src/types/enums/log-level';
 import { OutputLog } from 'src/types/interfaces/output-log';
 
-export function parseInputLogFile(
-  logLevel: LogLevel,
-  options: LogParseOptions,
-) {
+export function parseInputLogFile(options: LogParseOptions) {
   const inputLogData = fs.readFileSync(options.input, 'utf8');
   const logs = inputLogData.split(
     /\s+(?=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z)/, // ISO 8601 -> YYYY-MM-DDTHH:mm:ss.sssZ
   );
 
-  return buildOutputLog(logLevel, logs);
+  if (logs.filter((log) => log.length > 0).length === 0) {
+    return [];
+  }
+
+  return buildOutputLog(options.logLevel, logs);
 }
 
 function buildOutputLog(logLevel: LogLevel, logs: string[]): OutputLog[] {
