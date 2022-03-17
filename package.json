@@ -11,10 +11,11 @@
     "parse-log": "ts-node -r tsconfig-paths/register src/main.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test": "jest --config=jest.config.ts --runInBand",
+    "test:watch": "yarn test --watch",
+    "test:cov": "yarn test --coverage",
+    "test:integration": "jest --config ./test/jest-integration.json",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --config=jest.config.ts --runInBand"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -27,7 +28,7 @@
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
-    "@nestjs/testing": "^8.0.0",
+    "@nestjs/testing": "^8.4.1",
     "@types/inquirer": "^8.2.0",
     "@types/jest": "27.0.2",
     "@types/node": "^16.0.0",
@@ -37,6 +38,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.2.5",
+    "nest-commander-testing": "^2.0.1",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
     "ts-jest": "^27.0.3",
